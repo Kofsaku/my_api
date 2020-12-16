@@ -1,17 +1,20 @@
 class ItemsController < ApplicationController
      def index          
           @items = Item.all
-          #items2 = Item.create(:title => "英語を使えるようになる1万の秘密", :body => "what you need to do first is to remember more than 100,000 words in a day.")
          render  :json =>  @items
+     end
 
+     def show
+          @item = Item.find(params[:id])
+          render :json => @item
+     end
+
+     def create 
+          item = Item.new(:title => "#{params[:title]}", :body => "#{params[:body]}")
+         if item.save then
+          render :json => { result:  "success", title: item.title,  body: item.body}
+         else
+          render :json => { result:  "failed", title: item.title,  body: item.body}
+         end
      end
 end
-
-#別のdefを作る。
-#↑とは別にidごとにjsonを返すアクションの設定 @items = Item.find(params[:id])
-#特定の情報をとってくる
-#新しく作る
-#あるデータを削除するAPI
-#cd ../
-#ls 
-# 

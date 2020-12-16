@@ -24,9 +24,3 @@ Item.create(
           }
      ]
 )
-
-#items = Item.create([{title: "英語を使えるようになる1万の秘密"}, {body: what you need to do first is to remember more than 100,000 words in a day},{id:null}])
-
-#Item.create(:title => "英語を使えるようになる1万の秘密", :body => "what you need to do first is to remember more than 100,000 words in a day.")
-
-#idに紐づくデータを表示するように
