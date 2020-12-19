@@ -19,12 +19,18 @@ class ItemsController < ApplicationController
          end
      end
 
+
+     def update
+          item = Item.find_by(id: params[:id])
+          item.update(title: params[:title], body: params[:body])
+          item.save
+          render :ison => item
+
      def destroy
           item = Item.find(params[:id])
           item.destroy
           render :json => item
      end
-
 end
 
 #リクエストはtitile とbody以外も入れれるようにする。
