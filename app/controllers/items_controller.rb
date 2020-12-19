@@ -17,4 +17,11 @@ class ItemsController < ApplicationController
           render :json => { result:  "failed", title: item.title,  body: item.body}
          end
      end
+
+     def update
+          item = Item.find_by(id: params[:id])
+          item.update(title: params[:title], body: params[:body])
+          item.save
+          render :ison => item
+     end
 end
