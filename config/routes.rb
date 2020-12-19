@@ -3,5 +3,8 @@ Rails.application.routes.draw do
   get "items" => "items#index"
   get "items/:id" => "items#show"
   post "create" => "items#create"
+  delete "delete/:id" => "items#destroy"
+  get "search" => "items#search" 
+
 end
   
