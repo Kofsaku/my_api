@@ -25,6 +25,7 @@ class ItemsController < ApplicationController
           item.update(title: params[:title], body: params[:body])
           item.save
           render :ison => item
+     end
 
      def destroy
           item = Item.find(params[:id])
@@ -38,4 +39,4 @@ end
 #          item = Item.where(:title => "#{params[:title]}", :body => "#{params[:body]}")
 #クエリ　SQL 複数のモデルにあるデータないで検索することもある
 
-#updateを作る　指定された🆔のtitleやbodyを更新できるAPIを作る。
+#updateを作る　指定されたidのtitleやbodyを更新できるAPIを作る。
