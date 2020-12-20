@@ -3,10 +3,8 @@ Rails.application.routes.draw do
   get "items" => "items#index"
   get "items/:id" => "items#show"
   post "create" => "items#create"
-
-  put "update" => "items#update"
-
-  delete "delete/:id" => "items#destroy"
+  put "items" => "items#update"
+  delete "items" => "items#destroy"
   get "search" => "items#search" 
 
 
