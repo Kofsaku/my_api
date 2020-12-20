@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
      def index          
-          @items = Item.all
-         render  :json =>  @items
+          items = Item.all
+          items = Item.where("title LIKE ?", "%#{params[:keyword]}%" ).or (Item.where("body LIKE?","%#{params[:keyword]}%"))
+         render  :json =>  items
      end
 
      def show
@@ -30,12 +31,6 @@ class ItemsController < ApplicationController
           item = Item.find(params[:id])
           item.destroy
           render :json => item
-     end
-
-     def search 
-          items = Item.where("title LIKE ?", "%#{params[:keyword]}%" ).or (Item.where("body LIKE?","%#{params[:keyword]}%"))
-          render :json => items
-
      end
 end
 
