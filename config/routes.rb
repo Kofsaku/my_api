@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   post "create" => "items#create"
   put "items" => "items#update"
   delete "items" => "items#destroy"
-  get "search" => "items#search" 
+
 
 
 end
