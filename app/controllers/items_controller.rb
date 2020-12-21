@@ -6,8 +6,8 @@ class ItemsController < ApplicationController
      end
 
      def show
-          @item = Item.find(params[:id])
-          render :json => @item
+          item = Item.find(params[:id])
+          render :json => item
      end
 
      def create 
@@ -33,10 +33,3 @@ class ItemsController < ApplicationController
           render :json => item
      end
 end
-
-#リクエストはtitile とbody以外も入れれるようにする。
-#なんでもいいから入力されたやつがtitleかbodyに含まれているのかを確認してjsonで返す。
-#          item = Item.where(:title => "#{params[:title]}", :body => "#{params[:body]}")
-#クエリ　SQL 複数のモデルにあるデータないで検索することもある
-
-#updateを作る　指定されたidのtitleやbodyを更新できるAPIを作る。
