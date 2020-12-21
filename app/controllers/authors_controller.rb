@@ -13,9 +13,10 @@ class AuthorsController < ApplicationController
      def create
           author = Author.new(name: params[:name])
           if author.save then
-               render :json => {result: success, name: paramas[:name]}
-          else render :json => {result: failed}
-     end
+               render :json => {result: "success", name: paramas[:name]}
+          else 
+               render :json => {result: "failed"}
+          end
      end
 
      def destroy
