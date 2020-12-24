@@ -13,7 +13,7 @@ class AuthorsController < ApplicationController
      def create
           author = Author.new(name: params[:name])
           if author.save then
-               render :json => {result: "success", name: paramas[:name]}
+               render :json => {result: "success", name: params[:name]}
           else 
                render :json => {result: "failed"}
           end
@@ -25,7 +25,7 @@ class AuthorsController < ApplicationController
      end
 
      def update
-          author = Author.find_by(params[:id])
+          author = Author.find_by(id: params[:id])
           author.update(name: params[:name])
           render :json => author
      end
