@@ -27,7 +27,6 @@ class AuthorsController < ApplicationController
      def update
           author = Author.find_by(id: params[:id])
           author.update(name: params[:name])
-          author.save
           render :json => author
      end
 
