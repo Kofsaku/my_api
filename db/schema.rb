@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_21_092718) do
+ActiveRecord::Schema.define(version: 2020_12_23_095307) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2020_12_21_092718) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "title"
     t.string "body"
+    t.integer "author_id"
   end
 
 end
