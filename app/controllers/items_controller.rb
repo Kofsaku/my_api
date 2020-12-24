@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
      def index          
           item = Item.all
           items = Item.where("title LIKE ?", "%#{params[:keyword]}%" ).or (Item.where("body LIKE?","%#{params[:keyword]}%"))
-         render  :json =>  items
+          render  :json =>  items
      end
 
      def show
@@ -13,10 +13,10 @@ class ItemsController < ApplicationController
      def create 
           item = Item.new(title: params[:title], body: params[:body])
           if item.save then
-          render :json => { result: "success", title: item.title, body: item.body}
-         else
-          render :json => { result:  "failed", title: item.title,  body: item.body}
-         end
+               render :json => { result: "success", title: item.title, body: item.body}
+          else
+               render :json => { result:  "failed", title: item.title,  body: item.body}
+          end
      end
 
      def update
