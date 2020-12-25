@@ -1,8 +1,18 @@
 class ItemsController < ApplicationController
      def index          
-          item = Item.all
+          items = Item.all
           items = Item.where("title LIKE ?", "%#{params[:keyword]}%" ).or (Item.where("body LIKE?","%#{params[:keyword]}%"))
-          render  :json =>  items
+          awesome = []
+          items.each do |item|
+               hash = item.attributes 
+               awesome.push(hash)
+               if item.author.present?
+                    hash.store("name", item.author.name)
+               else 
+                    hash.store("name", nil)
+               end
+          end
+          render :json => awesome
      end
 
      def show
