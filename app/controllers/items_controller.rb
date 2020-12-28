@@ -11,9 +11,6 @@ class ItemsController < ApplicationController
          items = Item.joins(:author).where("authors.name LIKE ?", "%#{author}%" ).where("title LIKE ?", "%#{keyword}%" )
          end
 
-               #items = Item.left_joins(:author).where("name LIKE?", "%#{params[:keyword]}%").present?
-          #else items = Item.all
-          #end
           awesome = []
           items.each do |item|
                hash = item.attributes 
@@ -26,7 +23,6 @@ class ItemsController < ApplicationController
           end
           render :json => awesome
      end
-    # items.to_json(:include => :author)
 
      def show
           item = Item.find(params[:id])
