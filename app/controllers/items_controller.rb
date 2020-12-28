@@ -1,8 +1,16 @@
 class ItemsController < ApplicationController
      def index          
           item = Item.all
-          items = Item.where("title LIKE ?", "%#{params[:keyword]}%" ).or (Item.where("body LIKE?","%#{params[:keyword]}%"))
-
+          author = "#{params[:author]}"
+          keyword = "#{params[:keyword]}"
+          if author.present? && keyword.empty?
+           items = Item.left_joins(:author).where(authors: {name: "#{author}"})
+          elsif author.empty? && keyword.present?
+           items = Item.where("title LIKE ?", "%#{keyword}%" ).or (Item.where("body LIKE?","%#{keyword}%"))
+          elsif author.present? && keyword.present?
+          items = Item.joins(:author).where("authors.name LIKE ?", "%#{author}%" ).where("title LIKE ?", "%#{keyword}%" )
+          end
+          
           awesome = []
           items.each do |item|
                hash = item.attributes 
