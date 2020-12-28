@@ -1,11 +1,11 @@
 class ItemsController < ApplicationController
      def index          
           item = Item.all
-          author = "#{params[:author]}"
-          keyword = "#{params[:keyword]}"
-          if author.present? && keyword.empty?
-           items = Item.left_joins(:author).where(authors: {name: "#{author}"})
-          elsif author.empty? && keyword.present?
+          author = params[:author]
+          keyword = params[:keyword]
+          if author.present? && keyword.nil?
+           items = Item.joins(:author).where("authors.name LIKE ?", "%#{author}%" )
+          elsif author.nil? && keyword.present?
            items = Item.where("title LIKE ?", "%#{keyword}%" ).or (Item.where("body LIKE?","%#{keyword}%"))
           elsif author.present? && keyword.present?
           items = Item.joins(:author).where("authors.name LIKE ?", "%#{author}%" ).where("title LIKE ?", "%#{keyword}%" )
