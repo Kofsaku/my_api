@@ -1,9 +1,32 @@
 class ItemsController < ApplicationController
      def index          
-          item = Item.all
-          items = Item.where("title LIKE ?", "%#{params[:keyword]}%" ).or (Item.where("body LIKE?","%#{params[:keyword]}%"))
-          render  :json =>  items
+          items = Item.all
+         author = "#{params[:author]}"
+         keyword = "#{params[:keyword]}"
+         if author.present? && keyword.empty?
+          items = Item.left_joins(:author).where(authors: {name: "#{author}"})
+         elsif author.empty? && keyword.present?
+          items = Item.where("title LIKE ?", "%#{keyword}%" ).or (Item.where("body LIKE?","%#{keyword}%"))
+         elsif author.present? && keyword.present?
+         items = Item.joins(:author).where("authors.name LIKE ?", "%#{author}%" ).where("title LIKE ?", "%#{keyword}%" )
+         end
+
+               #items = Item.left_joins(:author).where("name LIKE?", "%#{params[:keyword]}%").present?
+          #else items = Item.all
+          #end
+          awesome = []
+          items.each do |item|
+               hash = item.attributes 
+               awesome.push(hash)
+               if item.author.present?
+                    hash.store("name", item.author.name)
+               else 
+                    hash.store("name", nil)
+               end
+          end
+          render :json => awesome
      end
+    # items.to_json(:include => :author)
 
      def show
           item = Item.find(params[:id])
