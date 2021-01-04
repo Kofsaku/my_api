@@ -27,7 +27,7 @@ class ItemsController < ApplicationController
      end
 
      def show
-          item = Author.find(params[:id])
+          item = Item.find(params[:id])
           render :json => item
      end
 
