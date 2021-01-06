@@ -1,17 +1,29 @@
 class ItemsController < ApplicationController
 
      def index          
+          page = 10
           items = Item.all
           author = params[:author]
           keyword = params[:keyword]
-          if author.present? && keyword.nil?
-           items = Item.joins(:author).where("authors.name LIKE ?", "%#{author}%" )
-          elsif author.nil? && keyword.present?
-           items = Item.where("title LIKE ?", "%#{keyword}%" ).or (Item.where("body LIKE?","%#{keyword}%"))
-          elsif author.present? && keyword.present?
-          items = Item.joins(:author).where("authors.name LIKE ?", "%#{author}%" ).where("title LIKE ?", "%#{keyword}%" )
-          end
+          items = Item.all
 
+          if author.present? && keyword.blank?
+               items = Item.joins(:author)
+               .where("authors.name LIKE ?", "%#{author}%" ).paginate(page: params[:page], per_page: page)
+          elsif author.blank? && keyword.present?
+               items = Item
+               .where("title LIKE ?", "%#{keyword}%" ).paginate(page: params[:page], per_page: page)
+               .or (Item.where("body LIKE?","%#{keyword}%")).paginate(page: params[:page], per_page: page)
+          elsif author.present? && keyword.present?
+               items = Item.joins(:author)
+               .where("authors.name LIKE ?", "%#{author}%" ).paginate(page: params[:page], per_page: page)
+               .where("title LIKE ?", "%#{keyword}%" ).paginate(page: params[:page], per_page: page)
+               .or(Item.where("authors.name LIKE ?", "%#{author}%" ).paginate(page: params[:page], per_page: page)
+               .where("body LIKE ?", "%#{keyword}%" )).paginate(page: params[:page], per_page: page)
+          else 
+               items = Item.paginate(page: params[:page], per_page: page)
+          end
+       
           awesome = []
           items.each do |item|
                hash = item.attributes 
