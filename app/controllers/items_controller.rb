@@ -13,7 +13,7 @@ class ItemsController < ApplicationController
                items = items.where("title LIKE ?", "%#{keyword}%" ).or (items.where("body LIKE?","%#{keyword}%"))
           end
           items = items.paginate(page: params[:page], per_page: page)
-
+               
           awesome = []
           items.each do |item|
                hash = item.attributes 
