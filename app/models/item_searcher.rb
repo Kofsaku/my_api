@@ -1,8 +1,7 @@
 class ItemSearcher 
-     def initialize(params, items, author, keyword, tags_name)
+     def initialize(params, items, keyword, tags_name)
           @params = params
           @items = items
-          @author = author
           @keyword = keyword
           @tags_name = tags_name
      end
@@ -32,9 +31,9 @@ end
 
 #params = ActionController::Parameters.new({author: "織田信長" })
 
-params = ActionController::Parameters.new(author: "")
+params = ActionController::Parameters.new(author: "織田")
 
-item_searcher1 = ItemSearcher.new(params, Item.all, "", "","")
+item_searcher1 = ItemSearcher.new(params, Item.all,"","")
 item_searcher2 = ItemSearcher.new(params, Item.all, "津端", "", "モテテクニック")
 item_searcher3 = ItemSearcher.new(params, Item.all, "織田", "", ["歴史","英語"])
 item_searcher4 = ItemSearcher.new(params, Item.all, "", "", ["歴史", "ミステリー"])
