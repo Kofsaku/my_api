@@ -2,29 +2,10 @@ class ItemsController < ApplicationController
 
      def index          
           page = 10
-          items = Item.all
-          author = params[:author]
-          keyword = params[:keyword]
-          tag_names = params[:tag]
-          tags = Tag.where(name: tag_names)
-          tag_ids = tags.ids
-
-          if author.present? 
-               items = items.joins(:author).where("authors.name LIKE ?", "%#{author}%" )
-          end
-
-         if tag_ids.present?
-             items = items.where(id: ItemTag.select(:item_id)
-             .where(tag_id: tag_ids)
-             .group(:item_id)
-             .having("COUNT(DISTINCT item_tags.tag_id) = ?", tag_ids.length))
-          end
-     
-          if keyword.present?
-               items = items.where("title LIKE ?", "%#{keyword}%" ).or (items.where("body LIKE?","%#{keyword}%"))
-          end
+          item_searcher = ItemSearcher.new(params, Item.all)
+          items = item_searcher.execute
           items = items.paginate(page: params[:page], per_page: page)
-               
+          
           awesome = []
           items.each do |item|
                hash = item.attributes 
