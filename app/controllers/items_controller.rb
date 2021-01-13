@@ -10,12 +10,8 @@ class ItemsController < ApplicationController
           items.each do |item|
                hash = item.attributes 
                awesome.push(hash)
-               if item.author.present?
-                    hash.store("name", item.author.name)
-                    hash.store("tags", item.tags)
-               else 
-                    hash.store("name", nil)
-               end
+               hash.store("name", item.author&.name)
+               hash.store("tags", item.tags)
           end
           render :json => awesome
      end
