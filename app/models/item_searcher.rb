@@ -6,10 +6,6 @@ class ItemSearcher
      end
 
      def execute
-          
-          tags_list = Tag.where(name: @tags_name)
-          tag_ids = tags_list.ids
-
           if @params[:author].present? 
                @items = @items.joins(:author).where("authors.name LIKE ?", "%#{@params[:author]}%")
           end
@@ -18,6 +14,8 @@ class ItemSearcher
                @items = @items.where("title LIKE ?", "%#{@params[:keyword]}%" ).or (@items.where("body LIKE?","%#{@params[:keyword]}%"))
           end
 
+          tags_list = Tag.where(name: @params[:tag_names])
+          tag_ids = tags_list.ids
           if tag_ids.present?
                @items = @items.where(id: ItemTag.select(:item_id)
                .where(tag_id: tag_ids)
@@ -30,12 +28,12 @@ end
 
 #params = ActionController::Parameters.new({author: "織田信長" })
 
-params = ActionController::Parameters.new(author: "", keyword: "プログラム")
+params = ActionController::Parameters.new(author: "", keyword: "", tag_names: ["歴史", "ミステリー"])
 
 item_searcher1 = ItemSearcher.new(params, Item.all,"")
 item_searcher2 = ItemSearcher.new(params, Item.all,"モテテクニック")
 item_searcher3 = ItemSearcher.new(params, Item.all, "織田", "", ["歴史","英語"])
-item_searcher4 = ItemSearcher.new(params, Item.all, "", "", ["歴史", "ミステリー"])
+item_searcher4 = ItemSearcher.new(params, Item.all, ["歴史", "ミステリー"])
 item_searcher5 = ItemSearcher.new(params, Item.all, "", "プログラム", "")
 item_searcher6 = ItemSearcher.new(params, Item.all, "", "信長", "歴史")
 item_searcher7 = ItemSearcher.new(params, Item.all, "", "", "")
